@@ -19,7 +19,7 @@ const App: React.FC = () => {
         item.toLowerCase().includes(query) && 
         !items.some(existing => existing.toLowerCase() === item.toLowerCase())
       )
-      .slice(0, 5); // Exibe as 5 melhores sugestões
+      .slice(0, 5);
   }, [inputValue, items]);
 
   const handleAddItem = useCallback((text?: string) => {
@@ -36,10 +36,6 @@ const App: React.FC = () => {
     handleAddItem();
   };
 
-  const handleSuggestionClick = (item: string) => {
-    handleAddItem(item);
-  };
-
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
@@ -51,8 +47,8 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col items-center p-4 md:p-8 bg-white">
-      <div className="w-full max-w-md flex flex-col gap-8 relative">
+    <div className="min-h-screen flex flex-col items-center p-6 bg-white selection:bg-black selection:text-white">
+      <div className="w-full max-w-md flex flex-col gap-10 relative">
         <Header />
 
         <div ref={containerRef} className="relative">
@@ -66,26 +62,26 @@ const App: React.FC = () => {
               }}
               onFocus={() => setShowSuggestions(true)}
               placeholder="Digite o nome do item..."
-              className="flex-1 px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition-all text-gray-800 placeholder:text-gray-400"
+              className="flex-1 px-4 py-4 rounded-2xl border-2 border-gray-100 bg-white focus:outline-none focus:border-black transition-all text-gray-800 placeholder:text-gray-400 text-lg"
               autoFocus
             />
             <button
               type="submit"
-              className="bg-black text-white p-3 rounded-xl hover:bg-gray-800 active:scale-95 transition-all flex items-center justify-center shadow-md"
+              className="bg-black text-white px-5 rounded-2xl hover:opacity-90 active:scale-95 transition-all flex items-center justify-center"
               aria-label="Adicionar item"
             >
-              <Plus size={24} strokeWidth={2.5} />
+              <Plus size={28} strokeWidth={3} />
             </button>
           </form>
 
           {showSuggestions && filteredSuggestions.length > 0 && (
-            <ul className="absolute z-20 w-full mt-1 bg-white border border-gray-200 rounded-xl shadow-xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+            <ul className="absolute z-20 w-full mt-2 bg-white border border-gray-200 rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
               {filteredSuggestions.map((suggestion) => (
                 <li key={suggestion}>
                   <button
                     type="button"
-                    onClick={() => handleSuggestionClick(suggestion)}
-                    className="w-full text-left px-4 py-3 hover:bg-gray-50 text-gray-700 font-medium transition-colors border-b border-gray-50 last:border-0"
+                    onClick={() => handleAddItem(suggestion)}
+                    className="w-full text-left px-5 py-4 hover:bg-gray-50 text-gray-700 font-medium transition-colors border-b border-gray-50 last:border-0 text-lg"
                   >
                     {suggestion}
                   </button>
@@ -95,13 +91,13 @@ const App: React.FC = () => {
           )}
         </div>
 
-        <div className="flex-1">
+        <main className="flex-1">
           <ShoppingList items={items} />
-        </div>
+        </main>
       </div>
 
-      <footer className="mt-auto pt-8 text-gray-400 text-xs font-medium uppercase tracking-widest">
-        AnoteAki &bull; Simplicidade
+      <footer className="mt-auto py-10 text-gray-300 text-xs font-bold uppercase tracking-[0.2em]">
+        AnoteAki
       </footer>
     </div>
   );
