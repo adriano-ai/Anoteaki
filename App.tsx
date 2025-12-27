@@ -19,7 +19,7 @@ const App: React.FC = () => {
         item.toLowerCase().includes(query) && 
         !items.some(existing => existing.toLowerCase() === item.toLowerCase())
       )
-      .slice(0, 6);
+      .slice(0, 5); // Exibe as 5 melhores sugestões
   }, [inputValue, items]);
 
   const handleAddItem = useCallback((text?: string) => {
@@ -40,7 +40,6 @@ const App: React.FC = () => {
     handleAddItem(item);
   };
 
-  // Close suggestions when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
@@ -52,8 +51,8 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col items-center p-4 md:p-8">
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex flex-col gap-8 relative">
+    <div className="min-h-screen flex flex-col items-center p-4 md:p-8 bg-white">
+      <div className="w-full max-w-md flex flex-col gap-8 relative">
         <Header />
 
         <div ref={containerRef} className="relative">
@@ -66,13 +65,13 @@ const App: React.FC = () => {
                 setShowSuggestions(true);
               }}
               onFocus={() => setShowSuggestions(true)}
-              placeholder="O que você precisa?"
+              placeholder="Digite o nome do item..."
               className="flex-1 px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition-all text-gray-800 placeholder:text-gray-400"
               autoFocus
             />
             <button
               type="submit"
-              className="bg-black text-white p-3 rounded-xl hover:bg-gray-800 active:scale-95 transition-all flex items-center justify-center"
+              className="bg-black text-white p-3 rounded-xl hover:bg-gray-800 active:scale-95 transition-all flex items-center justify-center shadow-md"
               aria-label="Adicionar item"
             >
               <Plus size={24} strokeWidth={2.5} />
@@ -80,10 +79,11 @@ const App: React.FC = () => {
           </form>
 
           {showSuggestions && filteredSuggestions.length > 0 && (
-            <ul className="absolute z-10 w-full mt-2 bg-white border border-gray-100 rounded-xl shadow-lg overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+            <ul className="absolute z-20 w-full mt-1 bg-white border border-gray-200 rounded-xl shadow-xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
               {filteredSuggestions.map((suggestion) => (
                 <li key={suggestion}>
                   <button
+                    type="button"
                     onClick={() => handleSuggestionClick(suggestion)}
                     className="w-full text-left px-4 py-3 hover:bg-gray-50 text-gray-700 font-medium transition-colors border-b border-gray-50 last:border-0"
                   >
@@ -100,8 +100,8 @@ const App: React.FC = () => {
         </div>
       </div>
 
-      <footer className="mt-8 text-gray-400 text-sm font-medium">
-        AnoteAki &bull; Simples assim.
+      <footer className="mt-auto pt-8 text-gray-400 text-xs font-medium uppercase tracking-widest">
+        AnoteAki &bull; Simplicidade
       </footer>
     </div>
   );

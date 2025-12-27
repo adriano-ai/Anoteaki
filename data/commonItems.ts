@@ -6,8 +6,8 @@ export const commonItems = [
   "Maçã", "Laranja", "Limão", "Arroz integral", "Azeite", "Vinagre", "Molho de tomate", 
   "Extrato de tomate", "Achocolatado", "Biscoito", "Bolacha", "Chocolate", "Refrigerante", 
   "Suco", "Água", "Sabonete", "Shampoo", "Condicionador", "Papel higiênico", "Detergente", 
-  "Amaciante", "Desinfetante", "Esponja de aço", "Sacola de lixo", "Fraldas", 
-  "Leite condensado", "Creme de leite", "Ervilha", "Milho", "Atum", "Sardinha", 
-  "Azeitona", "Catchup", "Mostarda", "Maionese", "Farofa", "Tempero pronto", "Pimenta", 
-  "Cebola em pó", "Alho em pó", "Açúcar mascavo", "Mel", "Geléia"
+  "Amaciante", "Desinfetante", "Esponja de aço", "Sacola de lixo", "Leite condensado", 
+  "Creme de leite", "Ervilha", "Milho", "Atum", "Sardinha", "Azeitona", "Catchup", 
+  "Mostarda", "Maionese", "Farofa", "Tempero pronto", "Pimenta", "Cebola em pó", 
+  "Alho em pó", "Açúcar mascavo", "Mel", "Geléia"
 ];
