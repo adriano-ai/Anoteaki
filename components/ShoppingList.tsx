@@ -1,8 +1,9 @@
 
 import React from 'react';
+import { MarketItem } from '../data/commonItems';
 
 interface ShoppingListProps {
-  items: string[];
+  items: MarketItem[];
 }
 
 export const ShoppingList: React.FC<ShoppingListProps> = ({ items }) => {
@@ -21,11 +22,15 @@ export const ShoppingList: React.FC<ShoppingListProps> = ({ items }) => {
     <ul className="divide-y divide-gray-50">
       {items.map((item, index) => (
         <li
-          key={`${item}-${index}`}
-          className="py-5 flex items-center gap-5 animate-in fade-in slide-in-from-bottom-2 duration-500"
+          key={`${item.name}-${index}`}
+          className="py-5 flex items-center gap-4 animate-in fade-in slide-in-from-bottom-2 duration-500"
         >
-          <div className="w-1.5 h-1.5 rounded-full bg-black/10" />
-          <span className="text-gray-900 text-xl font-medium tracking-tight">{item}</span>
+          <div className="flex items-center justify-center w-12 h-12 bg-gray-50 rounded-xl text-2xl shadow-sm border border-gray-100/50">
+            {item.icon}
+          </div>
+          <span className="text-gray-900 text-xl font-medium tracking-tight truncate flex-1">
+            {item.name}
+          </span>
         </li>
       ))}
     </ul>

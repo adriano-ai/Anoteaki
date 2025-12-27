@@ -3,10 +3,10 @@ import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react'
 import { Plus } from 'lucide-react';
 import { Header } from './components/Header';
 import { ShoppingList } from './components/ShoppingList';
-import { commonItems } from './data/commonItems';
+import { commonItems, getIconForItem, MarketItem } from './data/commonItems';
 
 const App: React.FC = () => {
-  const [items, setItems] = useState<string[]>([]);
+  const [items, setItems] = useState<MarketItem[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -15,17 +15,21 @@ const App: React.FC = () => {
     const query = inputValue.toLowerCase().trim();
     if (!query) return [];
     return commonItems
-      .filter(item => 
-        item.toLowerCase().includes(query) && 
-        !items.some(existing => existing.toLowerCase() === item.toLowerCase())
+      .filter(name => 
+        name.toLowerCase().includes(query) && 
+        !items.some(existing => existing.name.toLowerCase() === name.toLowerCase())
       )
       .slice(0, 5);
   }, [inputValue, items]);
 
   const handleAddItem = useCallback((text?: string) => {
-    const finalValue = (typeof text === 'string' ? text : inputValue).trim();
-    if (finalValue) {
-      setItems(prev => [...prev, finalValue]);
+    const name = (typeof text === 'string' ? text : inputValue).trim();
+    if (name) {
+      const newItem: MarketItem = {
+        name,
+        icon: getIconForItem(name)
+      };
+      setItems(prev => [...prev, newItem]);
       setInputValue('');
       setShowSuggestions(false);
     }
@@ -67,7 +71,7 @@ const App: React.FC = () => {
             />
             <button
               type="submit"
-              className="bg-black text-white px-5 rounded-2xl hover:opacity-90 active:scale-95 transition-all flex items-center justify-center"
+              className="bg-black text-white px-5 rounded-2xl hover:opacity-90 active:scale-95 transition-all flex items-center justify-center shadow-sm"
               aria-label="Adicionar item"
             >
               <Plus size={28} strokeWidth={3} />
@@ -81,8 +85,9 @@ const App: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => handleAddItem(suggestion)}
-                    className="w-full text-left px-5 py-4 hover:bg-gray-50 text-gray-700 font-medium transition-colors border-b border-gray-50 last:border-0 text-lg"
+                    className="w-full text-left px-5 py-4 hover:bg-gray-50 text-gray-700 font-medium transition-colors border-b border-gray-50 last:border-0 text-lg flex items-center gap-3"
                   >
+                    <span className="text-xl shrink-0">{getIconForItem(suggestion)}</span>
                     {suggestion}
                   </button>
                 </li>
